@@ -7,5 +7,5 @@ npm-debug.log*
 /src/generated/prisma
 prisma/migrations/*.sql
 generated/
-tests/
 coverage/
+tests/
