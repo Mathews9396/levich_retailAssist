@@ -25,7 +25,6 @@ enum ProductType {
   FLOUR // FLO
   SPICE // SPI
   DAIRY // DAI
-  BEVERAGE //BEV
 }
 
 enum ProductBrand {
