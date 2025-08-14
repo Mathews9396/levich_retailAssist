@@ -29,8 +29,9 @@ npm install
 
 Create an env file based on the sample env file provided.
 
+
 3. Prisma Setup
-4. 
+   
 npx prisma generate
 
 npx prisma migrate deploy
