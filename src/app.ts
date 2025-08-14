@@ -1,5 +1,5 @@
 import express from "express";
-import { PrismaClient } from "@generated/prisma";
+import { PrismaClient } from "../generated/prisma/index.js";
 
 import { checkHeader } from "./middlewares/authorization";
 import apiRouter from "./routes";
