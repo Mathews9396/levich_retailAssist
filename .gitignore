@@ -1,5 +1,10 @@
 # .gitignore
 node_modules/
 .env
+.env.test
 dist/
 npm-debug.log*
+/src/generated/prisma
+prisma/migrations/*.sql
+generated/
+tests/

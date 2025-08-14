@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductType {
+  BISCUIT // BIS
+  SUGAR // SUG
+  SALT // SAL
+  NOODLES // NOO
+  BREAD // BRE
+  OIL // OIL
+  RICE // RIC
+  FLOUR // FLO
+  SPICE // SPI
+  DAIRY // DAI
+  BEVERAGE //BEV
+}
+
+enum ProductBrand {
+  PARLE // PAR
+  TATA // TAT
+  MAGGI // MAG
+  BRITANNIA // BRI
+  FORTUNE // FOR
+  AASHIRVAAD // AAS
+  AMUL // AMU
+  EVEREST // EVE
+  PATANJALI // PAT
+  GENERIC // GEN
+}
+
+enum WeightUnit {
+  GRAM // G
+  KILOGRAM // K
+  LITER // L
+  MILLILITER // M
+  PIECE // P
+}
+
+model Product {
+  id     Int     @id @default(autoincrement())
+  sku    String  @unique
+  name   String
+  price  Float
+  active Boolean @default(true)
+
+  // New structured fields
+  productType ProductType
+  brand       ProductBrand
+  weight      Float // Numeric value (e.g., 800, 1.5, 250)
+  weightUnit  WeightUnit // Unit (GRAM, KILOGRAM, etc.)
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  //Relations
+  Stock        Stock?
+  InvoiceItems InvoiceItem[]
+
+  @@map("products")
+}
+
+model Stock {
+  id             Int       @id @default(autoincrement())
+  productId      Int    @unique @map("product_id")
+  quantity       Int // Current available stock
+  receivedTotal  Int       @default(0) @map("received_total") // Optional analytics field
+  soldTotal      Int       @default(0) @map("sold_total") // Optional analytics field
+  lastReceivedAt DateTime? @map("last_received_at") // When stock was last added
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  // Relations
+  product        Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("stocks")
+}
+
+model Invoice {
+  id             String   @id @default(uuid())
+  invoiceNumber  Int      @unique @map("invoice_number") // Sequential human-friendly number
+  subtotal       Decimal  @db.Decimal(10, 2)
+  grandTotal     Decimal  @map("grand_total") @db.Decimal(10, 2)
+  paymentMethod  String   @map("payment_method")
+  idempotencyKey String   @unique @map("idempotency_key")
+  status         String   @default("paid") // e.g., paid, cancelled
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  items InvoiceItem[]
+
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id          String  @id @default(uuid())
+  invoiceId   String  @map("invoice_id")
+  productId   Int  @map("product_id")
+  sku         String // Snapshot SKU at sale time
+  productName String  @map("product_name") // Snapshot name at sale time
+  qty         Int
+  unitPrice   Decimal @map("unit_price") @db.Decimal(10, 2)
+  lineTotal   Decimal @map("line_total") @db.Decimal(10, 2)
+
+  // Relations
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("invoice_items")
+}
+//SKU - Stock Keeping Unit
