@@ -98,7 +98,7 @@ router.post(
       { items, paymentMethod },
       idempotencyKey
     );
-    const invoiceStatus = invoice.newInvoice ? "created" : "fecthed";
+    const invoiceStatus = invoice.newInvoice ? "created" : "fetched";
     const httpStatus = invoice.newInvoice ? 201 : 200;
     res.status(httpStatus).json({
       success: true,
