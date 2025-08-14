@@ -21,30 +21,27 @@ Includes automated testing setup with Jest and a dedicated test database.
 
 git clone <repo-url>
 
-cd <project-folder>
+cd levich_retailAssist
 
 npm install
 
 2️. Environment Variables
 
-.env – for development
-
-.env.test – for testing
-
-A sample env file is provided.
+Create an env file based on the sample env file provided.
 
 3. Prisma Setup
+4. 
 npx prisma generate
 
 npx prisma migrate deploy
 
-npx prisma studio
+npx prisma studio (optional, to view the changes made by prisma migrations)
    
 
 4.Running the Project
 
 To seed data
-npm 
+npm run db:seed
 
 Run in TypeScript (Dev Mode)
 
@@ -59,4 +56,17 @@ npm start
 
 5. Running Tests
 
+Create a test database
+
 npm run test
+
+
+6. Further code to add
+
+Loggers and linters for debugging
+
+More test cases to cover all defined scenarios and edge cases
+
+Rate Limiting
+
+Docker
