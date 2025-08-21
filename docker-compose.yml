@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_init_reail_assist_2
+    environment:
+      POSTGRES_USER: matt
+      POSTGRES_PASSWORD: retail_Levi
+      POSTGRES_DB: retail_assist
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    command: sh -c "npx prisma generate && npx prisma migrate deploy && npm run db:seed && npm start"
+    container_name: 93961995/retail_assist:1.0
+    environment:
+      DATABASE_URL: "postgresql://matt:retail_Levi@postgres_init_reail_assist_2:5432/retail_assist"
+      AUTHTOKEN: 'LeVchReAsi'
+    depends_on:
+      - postgres
+    ports:
+      - "3001:3000"

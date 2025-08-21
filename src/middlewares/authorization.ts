@@ -2,6 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import { httpStatuses, messages } from "@constants";
 
 const checkHeader = function (req: Request, res: Response, next: NextFunction) {
+   if (req.path.startsWith("/health")) {
+    return next();
+  }
   if (
     !req.headers["auth-token"] ||
     req.headers["auth-token"] != process.env.AUTHTOKEN
