@@ -17,7 +17,7 @@ Includes automated testing setup with Jest and a dedicated test database.
 
 ## 🚀 Getting Started
 
-1️. Clone & Install
+1️. Clone the Repo
 
 $ git clone <repo-url>
 
@@ -28,7 +28,7 @@ $ cd levich_retailAssist
 
 $ docker compose up
 
-A postgres and node docker images will be pulled and app will start running.
+This command builds/pulls the Postgres and Node app images, creates containers, runs Prisma client generation and seeding, and then starts the application server.
 
 3. Install Dependencies and create Environment Variables
 
