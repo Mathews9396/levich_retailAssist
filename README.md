@@ -19,55 +19,60 @@ Includes automated testing setup with Jest and a dedicated test database.
 
 1️. Clone & Install
 
-git clone <repo-url>
+$ git clone <repo-url>
 
-cd levich_retailAssist
+$ cd levich_retailAssist
 
-npm install
 
-2️. Environment Variables
+2. If Docker is installed
+
+$ docker compose up
+
+A postgres and node docker images will be pulled and app will start running.
+
+3. Install Dependencies and create Environment Variables
+
+$ npm install
 
 Create an env file based on the sample env file provided.
 
 
-3. Prisma Setup
+4. Prisma Setup
    
-npx prisma generate
+$ npx prisma generate
 
-npx prisma migrate deploy
-
-npx prisma studio (optional, to view the changes made by prisma migrations)
+$ npx prisma migrate deploy
+ 
+$ npx prisma studio (optional, to view the changes made by prisma migrations)
    
 
-4.Running the Project
+5. Running the Project
 
 To seed data
-npm run db:seed
+$ npm run db:seed
 
 Run in TypeScript (Dev Mode)
 
-npm run dev 
+$ npm run dev 
 
 Run in JavaScript (Production Mode)
 
-npm run build
+$ npm run build
 
-npm start
+$ npm start
 
 
-5. Running Tests
+6. Running Tests
 
 Create a test database
 
-npm run test
+$ npm run test
 
 
-6. Further code to add
+7. Further enhancements:
 
 Loggers and linters for debugging
 
 More test cases to cover all defined scenarios and edge cases
 
 Rate Limiting
-
-Docker
